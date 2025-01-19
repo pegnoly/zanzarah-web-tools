@@ -1,39 +1,55 @@
 "use client"
 
 import { gql, useQuery } from "@apollo/client"
-import Link from "next/link"
 import { useParams } from "next/navigation"
+import WizformsListWrapper from "./list"
+import useBooksStore from "@/app/stores/books"
+import useWizformStore, { Element } from "@/app/stores/wizform"
 
-const wizformsQuery = gql`
-{
-    wizforms(bookId: "5a5247c2-273b-41e9-8224-491e02f77d8d", enabled: true, elementFilter: NEUTRAL_ONE) {
-        name
-    }
-}
-`
-
-type wizform = {
-    id: string,
-    number: number,
-    name: string
+type EnabledElementsQuery = {
+    elements: Element[]
 }
 
-function Wizforms() {
+function Page() {
+    const {book_id} = useParams<{book_id: string}>()
+    const setCurrentBook = useBooksStore((state) => state.setCurrentBook)
+
+    setCurrentBook(book_id)
+
+    return(
+        <>
+            <Wizforms bookId={book_id}/>
+        </>
+    )
+}
+
+interface WizformsSchema {
+    bookId: string
+}
+
+function Wizforms(schema: WizformsSchema) {
+
+    const loadElements = useWizformStore((state) => state.loadElements)
+
+    const elementsQuery = gql`{
+        elements(bookId: "${schema.bookId}") {
+            id,
+            name,
+            element
+        }
+    }`
+
+    const {loading, error, data} = useQuery<EnabledElementsQuery>(elementsQuery)
     
-    const {book_id} = useParams() as { book_id: string}
+    if (loading) return 'Loading...';
+    if (error) return `Error! ${error.message}`;
 
-    const {data} = useQuery<wizform[]>(wizformsQuery)
+    loadElements(data?.elements!)
 
-    console.log("data: ", data)
 
     return (<>
-        <h1>{book_id}</h1>
-        <ul>
-            <li>
-                <Link href="/wizform/test">Test wizform</Link>
-            </li>
-        </ul> 
+        <WizformsListWrapper/>
     </>)
 }
 
-export default Wizforms
+export default Page

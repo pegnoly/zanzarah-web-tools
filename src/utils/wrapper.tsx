@@ -11,8 +11,8 @@ import {
 const client=()=>{
   const httpLink = new HttpLink({
     uri: "https://zz-webapi-cv7m.shuttle.app/",
-    fetchOptions: { cache: "no-store", mode: 'no-cors'},
-    headers: {method: 'POST', contentType: 'application/json'}
+    fetchOptions: { cache: "no-store" },
+    //headers: {method: 'POST', contentType: 'application/json'}
   });
 
   return new ApolloClient({
