@@ -18,7 +18,7 @@ type wizform = {
     name: string
 }
 
-function Wizforms({params}: {params: {book_id: string} }) {
+function Wizforms() {
     
     const {book_id} = useParams() as { book_id: string}
 
