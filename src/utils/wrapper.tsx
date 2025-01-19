@@ -1,8 +1,7 @@
 //src/lib/apollo-wrapper.ts
 "use client";
 
-import { ReactNode } from "react";
-import { ApolloLink, HttpLink } from "@apollo/client";
+import { HttpLink } from "@apollo/client";
 import {
   ApolloNextAppProvider,
   ApolloClient,

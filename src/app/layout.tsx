@@ -1,13 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { ApolloWrapper } from "@/utils/wrapper";
-
-const client = new ApolloClient({
-  uri: "https://zz-webapi-cv7m.shuttle.app/",
-  cache: new InMemoryCache()
-})
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

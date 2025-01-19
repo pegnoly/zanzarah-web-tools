@@ -1,10 +1,8 @@
 "use client"
 
-import { query } from "@/utils/graphql"
 import { gql, useQuery } from "@apollo/client"
 import Link from "next/link"
 import { useParams } from "next/navigation"
-import { use } from "react"
 
 const wizformsQuery = gql`
 {
@@ -18,11 +16,6 @@ type wizform = {
     id: string,
     number: number,
     name: string
-}
-
-type wizformQueryParams = {
-    bookId: string,
-    enabled: boolean 
 }
 
 function Wizforms({params}: {params: {book_id: string} }) {
