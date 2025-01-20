@@ -3,6 +3,7 @@ import useWizformStore from "@/app/stores/wizform"
 import { gql, useQuery } from "@apollo/client"
 import { useShallow } from "zustand/shallow"
 import WizformFilters from "./filters"
+import Link from "next/link"
 
 
 function WizformsListWrapper() {
@@ -51,7 +52,7 @@ function WizformsList(schema: WizformsListSchema) {
         <ul>{data?.wizforms.map((wizform, index) => (
             <div key={index} style={{display: 'flex', flexDirection: 'row', gap: 10}}>
                 <img width={40} height={40} src={`data:image/bmp;base64,${wizform.icon64}`}></img>
-                {wizform.name}
+                <Link href={`/wizforms/${schema.bookId}/${wizform.id}`}>{wizform.name}</Link>
             </div>
         ))}</ul>
     </>)

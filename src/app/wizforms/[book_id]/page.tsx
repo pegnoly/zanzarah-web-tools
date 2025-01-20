@@ -9,7 +9,6 @@ import WizfofmMain from "./main"
 import { query } from "@/utils/graphql"
 import { useShallow } from "zustand/shallow"
 
-
 function Page({params} : { params : {book_id: string} }) {
 
     const {book_id} = useParams<{book_id: string}>()
@@ -21,7 +20,7 @@ function Page({params} : { params : {book_id: string} }) {
 
     return(
         <>
-            <WizfofmMain bookId={book_id}/>
+            <WizfofmMain/>
         </>
     )
 }
