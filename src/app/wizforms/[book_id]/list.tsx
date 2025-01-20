@@ -1,8 +1,6 @@
 import useBooksStore from "@/app/stores/books"
 import useWizformStore from "@/app/stores/wizform"
 import { gql, useQuery } from "@apollo/client"
-import { useParams } from "next/navigation"
-import { useEffect } from "react"
 import { useShallow } from "zustand/shallow"
 import WizformFilters from "./filters"
 

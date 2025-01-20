@@ -5,51 +5,25 @@ import { useParams } from "next/navigation"
 import WizformsListWrapper from "./list"
 import useBooksStore from "@/app/stores/books"
 import useWizformStore, { Element } from "@/app/stores/wizform"
+import WizfofmMain from "./main"
+import { query } from "@/utils/graphql"
+import { useShallow } from "zustand/shallow"
 
-type EnabledElementsQuery = {
-    elements: Element[]
-}
 
-function Page() {
+function Page({params} : { params : {book_id: string} }) {
+
     const {book_id} = useParams<{book_id: string}>()
-    const setCurrentBook = useBooksStore((state) => state.setCurrentBook)
+    const [currentBook, setCurrentBook] = useBooksStore(useShallow((state) => [state.currentBook, state.setCurrentBook]))
 
-    setCurrentBook(book_id)
+    if (book_id != currentBook) {
+        setCurrentBook(book_id)
+    }
 
     return(
         <>
-            <Wizforms bookId={book_id}/>
+            <WizfofmMain bookId={book_id}/>
         </>
     )
-}
-
-interface WizformsSchema {
-    bookId: string
-}
-
-function Wizforms(schema: WizformsSchema) {
-
-    const loadElements = useWizformStore((state) => state.loadElements)
-
-    const elementsQuery = gql`{
-        elements(bookId: "${schema.bookId}") {
-            id,
-            name,
-            element
-        }
-    }`
-
-    const {loading, error, data} = useQuery<EnabledElementsQuery>(elementsQuery)
-    
-    if (loading) return 'Loading...';
-    if (error) return `Error! ${error.message}`;
-
-    loadElements(data?.elements!)
-
-
-    return (<>
-        <WizformsListWrapper/>
-    </>)
 }
 
 export default Page
